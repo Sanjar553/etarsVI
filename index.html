@@ -992,6 +992,55 @@
             toggleControlMode(isTouchDevice ? 'mobile' : 'pc');
         }
 
+        // --- BRAWLER INFO VIEW UPDATE ---
+        function updateBrawlerInfo() {
+            const b = BRAWLERS[selectedBrawlerKey];
+            if (!b) return;
+            document.getElementById('info-skin-name').textContent = b.name;
+            document.getElementById('info-skin-desc').textContent = b.desc;
+            document.getElementById('info-skin-super').textContent = b.superName + ": " + b.superDesc;
+
+            const badge = document.getElementById('info-skin-badge');
+            if (b.cost === 0) {
+                badge.textContent = "BEPUL";
+                badge.className = "text-[10px] bg-slate-500/20 text-slate-400 px-2 py-1 rounded-md font-black tracking-wider uppercase";
+            } else if (b.cost <= 4000) {
+                badge.textContent = "NUKUNY (EPIC)";
+                badge.className = "text-[10px] bg-purple-500/20 text-purple-400 px-2 py-1 rounded-md font-black tracking-wider uppercase";
+            } else {
+                badge.textContent = "AFSONAVIY (LEGENDARY)";
+                badge.className = "text-[10px] bg-amber-500/20 text-amber-400 px-2 py-1 rounded-md font-black tracking-wider uppercase";
+            }
+
+            document.getElementById('st-attack-val').textContent = b.stats.attack + "%";
+            document.getElementById('st-attack-bar').style.width = b.stats.attack + "%";
+            document.getElementById('st-health-val').textContent = b.stats.health + "%";
+            document.getElementById('st-health-bar').style.width = b.stats.health + "%";
+            document.getElementById('st-speed-val').textContent = b.stats.speed + "%";
+            document.getElementById('st-speed-bar').style.width = b.stats.speed + "%";
+        }
+
+        // --- START GAME ACTIVE ---
+        function startGame() {
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('game-hud').classList.remove('hidden');
+
+            if (isTouchDevice) {
+                const mc = document.getElementById('mobile-controls');
+                mc.classList.remove('hidden');
+                mc.classList.add('flex');
+            }
+
+            initGame();
+            gameActive = true;
+            lastTime = performance.now();
+            requestAnimationFrame(gameLoop);
+        }
+
         // --- BRAWLER CLASS ---
         class Brawler {
             constructor(x, y, brawlerKey, isBot, name) {
@@ -1493,6 +1542,7 @@
 
                 updateHUD();
 
+                // Specific standard projectile actions for 15 Brawlers
                 if (this.brawlerKey === 'noob') {
                     playSound('shoot');
                     bullets.push(new Bullet(this.x + Math.cos(this.angle) * 20, this.y + Math.sin(this.angle) * 20, this.angle, this, false));
@@ -2139,15 +2189,35 @@
                 this.active = true;
                 
                 this.trailTimer = 0;
+                
+                // Specific projectile tags for 15 Brawlers
                 this.isPoisonDagger = false;
+                this.isCactusSpike = false;
+                this.isPiperSniper = false;
+                this.isAcidBottle = false;
+                this.isMortisBat = false;
+                this.isBouncy = false;
+                this.isBrockRocket = false;
+                this.isDynamite = false;
+                this.isBoArrow = false;
+                
+                // Super variants
+                this.isSpikePool = false;
+                this.isPiperBomb = false;
+                this.isPiperBombTimer = 90; // explodes on timeout
+                this.isDynamikeBarrel = false;
+                this.isBoMine = false;
+                this.bounces = 0;
             }
 
             update(dt) {
+                // Piper sniper bullet grows damage based on distance traveled
                 if (this.isPiperSniper) {
                     const traveledDist = Math.hypot(this.x - this.startX, this.y - this.startY);
                     this.damage = this.owner.damage * (1 + (traveledDist / this.range) * 0.8) * (1 + this.owner.powerCubes * 0.12);
                 }
 
+                // If Piper Bomb or Mines, they don't move
                 if (this.isPiperBomb) {
                     this.isPiperBombTimer -= dt;
                     if (this.isPiperBombTimer <= 0) {
@@ -2158,6 +2228,7 @@
                 }
 
                 if (this.isBoMine) {
+                    // Trigger when enemy enters radius
                     brawlers.forEach(other => {
                         if (other === this.owner || other.hp <= 0) return;
                         if (Math.hypot(this.x - other.x, this.y - other.y) < 60) {
@@ -2181,7 +2252,7 @@
                         vy: (Math.random() - 0.5) * 1.5,
                         radius: this.isSuper ? Math.random() * 4 + 2.5 : Math.random() * 2.5 + 1.2,
                         color: this.owner.bConfig.bulletColor,
-                        alpha: 0.8,
+                        alpha: 0.6,
                         decay: 0.05
                     });
                 }
@@ -2200,7 +2271,7 @@
                         
                         if (this.isBouncy && this.bounces < 3) {
                             this.bounces++;
-                            this.angle = this.angle + Math.PI; 
+                            this.angle = this.angle + Math.PI; // bounce back
                             this.startX = this.x;
                             this.startY = this.y;
                             playSound('hit');
@@ -2213,7 +2284,7 @@
                             if (this.owner === player) triggerScreenShake(8);
                             walls.splice(i, 1);
                         } else {
-                            createExplosion(this.x, this.y, '#94a3b8', 4);
+                            createExplosion(this.x, this.y, '#94a3b8', 2);
                         }
 
                         this.die();
@@ -2228,12 +2299,12 @@
                     if (d < this.radius + box.size / 2) {
                         box.hp -= this.damage;
                         this.die();
-                        createExplosion(this.x, this.y, '#eab308', 5);
+                        createExplosion(this.x, this.y, '#eab308', 3);
                         
                         if (box.hp <= 0) {
                             playSound('cube');
                             powerCubes.push({ x: box.x, y: box.y });
-                            createExplosion(box.x, box.y, '#eab308', fpsBoosterActive ? 8 : 18);
+                            createExplosion(box.x, box.y, '#eab308', fpsBoosterActive ? 6 : 14);
                         }
                         return;
                     }
@@ -3056,6 +3127,7 @@
         window.loginUser = loginUser;
         window.resetToMenu = resetToMenu;
         window.exportSaveFile = exportSaveFile;
+        window.updateBrawlerInfo = updateBrawlerInfo;
 
         window.onload = function() {
             detectDevice();
