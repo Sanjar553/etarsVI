@@ -31,7 +31,7 @@
 <body class="w-screen h-screen flex flex-col justify-center items-center relative">
 
     <!-- LOGIN / REGISTER & MODE SCREEN (START) -->
-    <div id="login-screen" class="absolute inset-0 bg-slate-955/98 z-50 flex flex-col items-center justify-start p-4 overflow-y-auto">
+    <div id="login-screen" class="absolute inset-0 bg-slate-950/98 z-50 flex flex-col items-center justify-start p-4 overflow-y-auto">
         <div class="max-w-md w-full bg-slate-900 border-4 border-yellow-500 rounded-3xl p-6 shadow-2xl brawl-shadow text-center my-auto">
             <h1 class="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-amber-500 to-red-500 tracking-widest uppercase mb-2">BRAWL ULTRA</h1>
             <p class="text-xs text-slate-400 mb-6 font-bold tracking-wider">VEKTOR MULTIPLAYER ARENASI (15 NOYOB BRAWLER)</p>
@@ -46,13 +46,13 @@
                 <label class="block text-xs font-black text-yellow-400 uppercase tracking-wider mb-3">O'yin Rejimi:</label>
                 <div class="grid grid-cols-1 gap-2">
                     <button onclick="selectGameMode('solo')" id="mode-solo" class="mode-select-btn p-3 bg-amber-500 text-slate-950 font-black rounded-xl text-xs text-left transition-all border-2 border-transparent">
-                        👤 Yakkaxon (Solo vs Bots)
+                        Yakkaxon (Solo vs Bots)
                     </button>
                     <button onclick="selectGameMode('local')" id="mode-local" class="mode-select-btn p-3 bg-slate-800 text-slate-300 font-bold rounded-xl text-xs text-left transition-all border-2 border-transparent hover:bg-slate-700">
-                        👥 Mahalliy 2 Kishilik (Same Keyboard Co-op)
+                        Mahalliy 2 Kishilik (Same Keyboard Co-op)
                     </button>
                     <button onclick="selectGameMode('online')" id="mode-online" class="mode-select-btn p-3 bg-slate-800 text-slate-300 font-bold rounded-xl text-xs text-left transition-all border-2 border-transparent hover:bg-slate-700 flex justify-between items-center">
-                        <span>🌐 Onlayn Arena (Firestore Cloud Sync)</span>
+                        <span>Onlayn Arena (Firestore Cloud Sync)</span>
                         <span class="text-[9px] bg-indigo-600 text-white px-2 py-0.5 rounded-full font-bold">YANGI</span>
                     </button>
                 </div>
@@ -81,7 +81,7 @@
 
     <!-- MAIN LOBBY / SHOP & SELECTION -->
     <div id="start-screen" class="hidden absolute inset-0 bg-slate-950/98 z-40 flex flex-col items-center justify-start overflow-y-auto p-4 md:p-8 text-white">
-        <div class="max-w-5xl w-full bg-slate-900 border-4 border-yellow-500 rounded-3xl p-6 shadow-2xl brawl-shadow my-auto">
+        <div class="max-w-5xl w-full bg-slate-900 border-4 border-yellow-500 rounded-3xl p-6 shadow-2xl brawl-shadow my-auto font-sans">
             
             <!-- Sarlavha va Profil / Rejimlar -->
             <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6 border-b border-slate-800 pb-4">
@@ -110,8 +110,8 @@
             </div>
             
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                <!-- CHAP TOMON: Brawler selection va Do'kon (Gridda scroll imkoni) -->
-                <div class="lg:col-span-8 flex flex-col gap-4 max-h-[500px] overflow-y-auto pr-2">
+                <!-- CHAP TOMON: Brawler selection va Do'kon -->
+                <div class="lg:col-span-8 flex flex-col gap-4 max-h-[480px] overflow-y-auto pr-2">
                     <h2 class="text-sm font-black text-yellow-400 uppercase tracking-wider flex items-center gap-1">Qahramonlar Do'koni & Tanlov:</h2>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-3" id="brawlers-shop-container">
                         <!-- Dinamik to'ldiriladi -->
@@ -187,7 +187,7 @@
     </div>
 
     <!-- IN-GAME HUD DISPLAY -->
-    <div id="game-hud" class="hidden absolute top-4 left-4 right-4 pointer-events-none z-10 flex justify-between items-start text-white">
+    <div id="game-hud" class="hidden absolute top-4 left-4 right-4 pointer-events-none z-10 flex justify-between items-start text-white font-sans">
         <div class="flex flex-col gap-1 bg-slate-900/95 p-3 rounded-2xl border border-slate-700/80 backdrop-blur-md pointer-events-auto shadow-xl">
             <div class="flex items-center gap-3">
                 <canvas id="hud-avatar-canvas" class="w-12 h-12 bg-slate-800 rounded-xl border border-slate-700"></canvas>
@@ -213,7 +213,7 @@
         </div>
 
         <!-- 2-O'YINCHI HUD KO'RSATKICHI -->
-        <div id="game-hud-p2" class="hidden flex flex-col gap-1 bg-slate-900/95 p-3 rounded-2xl border border-red-500/50 backdrop-blur-md pointer-events-auto shadow-xl">
+        <div id="game-hud-p2" class="hidden flex flex-col gap-1 bg-slate-900/95 p-3 rounded-2xl border border-red-500/50 backdrop-blur-md pointer-events-auto shadow-xl font-sans">
             <div class="flex items-center gap-3">
                 <canvas id="hud-avatar-canvas-p2" class="w-12 h-12 bg-slate-800 rounded-xl border border-red-500/30"></canvas>
                 <div>
@@ -235,6 +235,7 @@
         </div>
 
         <div class="flex flex-col gap-1 items-end">
+            <!-- FPS va Booster -->
             <div class="bg-slate-900/95 p-2 px-3 rounded-2xl border border-slate-700/80 backdrop-blur-md flex flex-col items-end gap-1 shadow-xl pointer-events-auto mb-2">
                 <div class="flex items-center gap-2">
                     <span class="text-[10px] font-bold text-slate-400">FPS:</span>
@@ -478,11 +479,24 @@
         function loadProfile(username) {
             const data = localStorage.getItem("brawl_stars_save_" + username);
             if (data) {
-                currentPlayer = JSON.parse(data);
-                if (!currentPlayer.unlockedBrawlers.includes("noob")) {
-                    currentPlayer.unlockedBrawlers.push("noob");
+                try {
+                    currentPlayer = JSON.parse(data);
+                    if (typeof currentPlayer.xp !== 'number' || isNaN(currentPlayer.xp)) {
+                        currentPlayer.xp = 0;
+                    }
+                    if (!currentPlayer.unlockedBrawlers || !Array.isArray(currentPlayer.unlockedBrawlers)) {
+                        currentPlayer.unlockedBrawlers = ["noob"];
+                    }
+                    if (!currentPlayer.unlockedBrawlers.includes("noob")) {
+                        currentPlayer.unlockedBrawlers.push("noob");
+                    }
+                    if (!currentPlayer.currentBrawler) {
+                        currentPlayer.currentBrawler = "noob";
+                    }
+                    return true;
+                } catch(e) {
+                    console.error(e);
                 }
-                return true;
             }
             return false;
         }
@@ -550,7 +564,7 @@
             updateBrawlerInfo();
         }
 
-        // --- SKINS & BRAWLERS DATA (EXPANDED TO 15 BRAWLERS) ---
+        // --- SKINS & BRAWLERS DATA ---
         const BRAWLERS = {
             noob: {
                 name: "Noob",
@@ -825,19 +839,19 @@
                 let cardClass = "border-slate-800 bg-slate-900";
                 
                 if (isSelected) {
-                    actionBtn = '<span class="w-full text-center text-xs font-black text-yellow-400 border border-yellow-500 bg-yellow-500/10 py-2 rounded-xl">TANLANGAN</span>';
+                    actionBtn = `<span class="w-full text-center text-xs font-black text-yellow-400 border border-yellow-500 bg-yellow-500/10 py-2 rounded-xl">TANLANGAN</span>`;
                     cardClass = "border-yellow-500 bg-slate-855";
                 } else if (isUnlocked) {
-                    actionBtn = '<button onclick="selectBrawler(\'' + key + '\')" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-extrabold text-xs py-2 rounded-xl transition-all">TANLASH</button>';
+                    actionBtn = `<button onclick="selectBrawler('${key}')" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-extrabold text-xs py-2 rounded-xl transition-all">TANLASH</button>`;
                 } else {
                     const progressPercent = Math.min(100, (currentPlayer.xp / b.cost) * 100);
                     actionBtn = `
                         <div class="w-full">
-                            <button onclick="buyBrawler('` + key + `')" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs py-2 rounded-xl transition-all mb-2">
-                                OCHISH (` + b.cost + ` XP)
+                            <button onclick="buyBrawler('${key}')" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs py-2 rounded-xl transition-all mb-2">
+                                OCHISH (${b.cost} XP)
                             </button>
                             <div class="w-full bg-slate-955 h-1.5 rounded-full overflow-hidden border border-slate-800">
-                                <div class="bg-green-500 h-full" style="width: ` + progressPercent + `%"></div>
+                                <div class="bg-green-500 h-full" style="width: ${progressPercent}%"></div>
                             </div>
                         </div>
                     `;
@@ -847,12 +861,12 @@
                 card.className = "brawler-card p-4 rounded-2xl border-2 " + cardClass + " flex flex-col justify-between items-center text-center shadow-md";
                 
                 card.innerHTML = `
-                    <div class="relative w-16 h-16 rounded-full border-2 border-slate-700 flex items-center justify-center mb-3 shadow-inner" style="background: radial-gradient(circle, ` + b.color + `90 0%, #020617 80%)">
-                        <div class="w-10 h-10 rounded-full border border-white/20" style="background-color: ` + b.color + `"></div>
+                    <div class="relative w-16 h-16 rounded-full border-2 border-slate-700 flex items-center justify-center mb-3 shadow-inner" style="background: radial-gradient(circle, ${b.color}90 0%, #020617 80%)">
+                        <div class="w-10 h-10 rounded-full border border-white/20" style="background-color: ${b.color}"></div>
                     </div>
-                    <span class="font-extrabold text-base text-slate-100">` + b.name + `</span>
-                    <span class="text-[9px] text-slate-400 mb-4 font-bold tracking-widest uppercase">Zarar: ` + b.damage + ` | HP: ` + b.maxHp + `</span>
-                    ` + actionBtn + `
+                    <span class="font-extrabold text-base text-slate-100">${b.name}</span>
+                    <span class="text-[9px] text-slate-400 mb-4 font-bold tracking-widest uppercase">Zarar: ${b.damage} | HP: ${b.maxHp}</span>
+                    ${actionBtn}
                 `;
                 container.appendChild(card);
             });
@@ -1026,6 +1040,11 @@
 
                 this.isInvisible = false;
                 this.invisTimer = 0;
+                
+                // Animatsiya uchun qo'shimcha parametrlar
+                this.bobbing = 0;
+                this.muzzleFlashTimer = 0;
+                this.muzzleFlashAngle = 0;
             }
 
             update(dt) {
@@ -1108,6 +1127,11 @@
                     }
                 }
 
+                // Muzzle flash animatsiya hisoblagichi
+                if (this.muzzleFlashTimer > 0) {
+                    this.muzzleFlashTimer -= dt;
+                }
+
                 if (this.isBot) {
                     this.updateBotAI(dt);
                 } else {
@@ -1146,6 +1170,10 @@
                     }
 
                     this.moveAndCollide(dx * dt, dy * dt);
+                    
+                    if (dx !== 0 || dy !== 0) {
+                        this.bobbing += 0.2 * dt;
+                    }
 
                     if (isTouchDevice) {
                         if (joystickActive) {
@@ -1188,6 +1216,10 @@
                     }
 
                     this.moveAndCollide(dx * dt, dy * dt);
+                    
+                    if (dx !== 0 || dy !== 0) {
+                        this.bobbing += 0.2 * dt;
+                    }
 
                     let nearest = null;
                     let minDist = 999999;
@@ -1371,6 +1403,10 @@
                 }
 
                 this.moveAndCollide(finalDx * dt, finalDy * dt);
+                
+                if (finalDx !== 0 || finalDy !== 0) {
+                    this.bobbing += 0.2 * dt;
+                }
             }
 
             findNearestTargetItem() {
@@ -1450,10 +1486,13 @@
                 this.lastShotTime = now;
                 this.lastReloadTime = now;
                 this.lastCombatTime = now;
+                
+                // Muzzle flash trigger
+                this.muzzleFlashTimer = 6;
+                this.muzzleFlashAngle = this.angle;
 
                 updateHUD();
 
-                // Specific standard projectile actions for 15 Brawlers
                 if (this.brawlerKey === 'noob') {
                     playSound('shoot');
                     bullets.push(new Bullet(this.x + Math.cos(this.angle) * 20, this.y + Math.sin(this.angle) * 20, this.angle, this, false));
@@ -1471,7 +1510,6 @@
                 } else if (this.brawlerKey === 'shelly' || this.brawlerKey === 'bull') {
                     playSound('shoot');
                     const baseAngle = this.angle;
-                    // Bull has less range but higher damage and spread
                     const angles = this.brawlerKey === 'bull' 
                         ? [baseAngle - 0.3, baseAngle - 0.15, baseAngle, baseAngle + 0.15, baseAngle + 0.3]
                         : [baseAngle - 0.22, baseAngle - 0.11, baseAngle, baseAngle + 0.11, baseAngle + 0.22];
@@ -1516,7 +1554,6 @@
                     bullets.push(spikeBall);
                 } else if (this.brawlerKey === 'piper') {
                     playSound('shoot');
-                    // Piper bullet gains damage over distance
                     const piperBullet = new Bullet(this.x + Math.cos(this.angle) * 20, this.y + Math.sin(this.angle) * 20, this.angle, this, false);
                     piperBullet.isPiperSniper = true;
                     bullets.push(piperBullet);
@@ -1526,18 +1563,12 @@
                     bottle.isAcidBottle = true;
                     bullets.push(bottle);
                 } else if (this.brawlerKey === 'mortis') {
-                    // Mortis dashes forward on standard attack!
                     playSound('shoot');
                     const dashDist = 80;
                     const dashAngle = this.angle;
-                    const targetX = this.x + Math.cos(dashAngle) * dashDist;
-                    const targetY = this.y + Math.sin(dashAngle) * dashDist;
-                    
-                    // Create slash sweep indicator on canvas
                     createExplosion(this.x, this.y, this.color, 8);
                     this.moveAndCollide(Math.cos(dashAngle) * dashDist, Math.sin(dashAngle) * dashDist);
                     
-                    // Damage everything swept through
                     brawlers.forEach(other => {
                         if (other === this || other.hp <= 0) return;
                         let d = Math.hypot(other.x - this.x, other.y - this.y);
@@ -1565,7 +1596,6 @@
                     bullets.push(rocket);
                 } else if (this.brawlerKey === 'dynamike') {
                     playSound('shoot');
-                    // Tosses twin dynamites
                     const d1 = new Bullet(this.x + Math.cos(this.angle) * 20, this.y + Math.sin(this.angle) * 20, this.angle - 0.1, this, false);
                     const d2 = new Bullet(this.x + Math.cos(this.angle) * 20, this.y + Math.sin(this.angle) * 20, this.angle + 0.1, this, false);
                     d1.isDynamite = true;
@@ -1573,7 +1603,6 @@
                     bullets.push(d1, d2);
                 } else if (this.brawlerKey === 'bo') {
                     playSound('shoot');
-                    // Fires 3 explosive arrows
                     let count = 0;
                     const arrows = setInterval(() => {
                         if (this.hp <= 0 || count >= 3) {
@@ -1596,8 +1625,8 @@
                 updateHUD();
 
                 playSound('super');
-                if (this === player) triggerScreenShake(12);
-                createExplosion(this.x, this.y, this.color, fpsBoosterActive ? 15 : 35); 
+                if (this === player) triggerScreenShake(16);
+                createExplosion(this.x, this.y, this.color, fpsBoosterActive ? 15 : 45); 
 
                 if (this.brawlerKey === 'noob') {
                     const mega = new Bullet(this.x + Math.cos(this.angle)*20, this.y + Math.sin(this.angle)*20, this.angle, this, true);
@@ -1630,14 +1659,14 @@
                     const targetY = this.y + Math.sin(this.angle) * jumpDist;
                     
                     let self = this;
-                    createExplosion(this.x, this.y, this.color, fpsBoosterActive ? 10 : 20);
+                    createExplosion(this.x, this.y, this.color, fpsBoosterActive ? 10 : 25);
                     this.x = Math.max(this.radius, Math.min(mapSize - this.radius, targetX));
                     this.y = Math.max(this.radius, Math.min(mapSize - this.radius, targetY));
 
                     setTimeout(() => {
                         playSound('hit');
-                        if (self === player) triggerScreenShake(15);
-                        createExplosion(self.x, self.y, self.color, fpsBoosterActive ? 20 : 45);
+                        if (self === player) triggerScreenShake(18);
+                        createExplosion(self.x, self.y, self.color, fpsBoosterActive ? 20 : 55);
 
                         for (let i = walls.length - 1; i >= 0; i--) {
                             let wall = walls[i];
@@ -1646,7 +1675,7 @@
                                 let closestY = Math.max(wall.y, Math.min(self.y, wall.y + wall.h));
                                 if (Math.hypot(self.x - closestX, self.y - closestY) < 150) {
                                     playSound('wall_break');
-                                    createExplosion(wall.x + wall.w/2, wall.y + wall.h/2, '#78350f', fpsBoosterActive ? 6 : 16);
+                                    createExplosion(wall.x + wall.w/2, wall.y + wall.h/2, '#78350f', fpsBoosterActive ? 8 : 20);
                                     walls.splice(i, 1);
                                 }
                             }
@@ -1683,7 +1712,6 @@
                     this.invisTimer = 360; 
                     createDamageText(this.x, this.y - 30, "KO'RINMASLIK! 🌫️", "#34d399");
                 } else if (this.brawlerKey === 'bull') {
-                    // Bull rushes in charging path breaking brick walls
                     let self = this;
                     const chargeDist = 320;
                     const chargeAngle = this.angle;
@@ -1698,9 +1726,8 @@
                         const step = 15;
                         traveled += step;
                         self.moveAndCollide(Math.cos(chargeAngle) * step, Math.sin(chargeAngle) * step);
-                        createExplosion(self.x, self.y, self.color, 2);
+                        createExplosion(self.x, self.y, self.color, 4);
 
-                        // Damage elements in the way
                         brawlers.forEach(other => {
                             if (other === self || other.hp <= 0) return;
                             if (Math.hypot(other.x - self.x, other.y - self.y) < 60) {
@@ -1708,7 +1735,6 @@
                             }
                         });
 
-                        // Break walls in path
                         for (let i = walls.length - 1; i >= 0; i--) {
                             let wall = walls[i];
                             if (wall.destructible) {
@@ -1716,46 +1742,39 @@
                                 let closestY = Math.max(wall.y, Math.min(self.y, wall.y + wall.h));
                                 if (Math.hypot(self.x - closestX, self.y - closestY) < 55) {
                                     playSound('wall_break');
-                                    createExplosion(wall.x + wall.w/2, wall.y + wall.h/2, '#78350f', 6);
+                                    createExplosion(wall.x + wall.w/2, wall.y + wall.h/2, '#78350f', 8);
                                     walls.splice(i, 1);
                                 }
                             }
                         }
                     }, 16);
                 } else if (this.brawlerKey === 'spike') {
-                    // Throws an ultimate slow zone needle spike bomb
                     const throwDist = 200;
-                    const targetX = this.x + Math.cos(this.angle) * throwDist;
-                    const targetY = this.y + Math.sin(this.angle) * throwDist;
-                    
                     const b = new Bullet(this.x, this.y, this.angle, this, true);
                     b.isSpikePool = true;
                     b.speed = 10;
                     b.range = throwDist;
                     bullets.push(b);
                 } else if (this.brawlerKey === 'piper') {
-                    // Giant jump getaway leaving 4 explosive grenades
                     const jumpDist = 280;
                     const targetX = this.x + Math.cos(this.angle) * jumpDist;
                     const targetY = this.y + Math.sin(this.angle) * jumpDist;
                     
                     let self = this;
-                    // Leave grenades at takeoff point
                     for (let i = 0; i < 4; i++) {
                         const ang = (Math.PI / 2) * i;
                         const bomb = new Bullet(this.x + Math.cos(ang)*20, this.y + Math.sin(ang)*20, ang, this, true);
                         bomb.isPiperBomb = true;
                         bomb.speed = 0;
-                        bomb.range = 10; // explodes on timeout
+                        bomb.range = 10; 
                         bullets.push(bomb);
                     }
                     
-                    createExplosion(this.x, this.y, this.color, 12);
+                    createExplosion(this.x, this.y, this.color, 15);
                     this.x = Math.max(this.radius, Math.min(mapSize - this.radius, targetX));
                     this.y = Math.max(this.radius, Math.min(mapSize - this.radius, targetY));
-                    createExplosion(this.x, this.y, this.color, 12);
+                    createExplosion(this.x, this.y, this.color, 15);
                 } else if (this.brawlerKey === 'barley') {
-                    // Volley of 5 acid puddles
                     const targetX = this.x + Math.cos(this.angle) * 250;
                     const targetY = this.y + Math.sin(this.angle) * 250;
                     
@@ -1767,7 +1786,6 @@
                         bullets.push(b);
                     });
                 } else if (this.brawlerKey === 'mortis') {
-                    // Swarm of bats stealing HP
                     const batCount = 10;
                     for (let i = 0; i < batCount; i++) {
                         const ang = this.angle + (Math.random() - 0.5) * 0.5;
@@ -1777,7 +1795,6 @@
                         bullets.push(bat);
                     }
                 } else if (this.brawlerKey === 'rico') {
-                    // 12 hyper bouncing bullets
                     let count = 0;
                     const hyperBurst = setInterval(() => {
                         if (this.hp <= 0 || count >= 12) {
@@ -1791,7 +1808,6 @@
                         count++;
                     }, 50);
                 } else if (this.brawlerKey === 'brock') {
-                    // Rain of rockets from above
                     const targetX = this.x + Math.cos(this.angle) * 300;
                     const targetY = this.y + Math.sin(this.angle) * 300;
                     
@@ -1805,13 +1821,11 @@
                         bullets.push(rocketRain);
                     }
                 } else if (this.brawlerKey === 'dynamike') {
-                    // Huge barrel bomb
                     const bomb = new Bullet(this.x + Math.cos(this.angle) * 20, this.y + Math.sin(this.angle) * 20, this.angle, this, true);
                     bomb.isDynamikeBarrel = true;
                     bomb.speed = 9;
                     bullets.push(bomb);
                 } else if (this.brawlerKey === 'bo') {
-                    // Invisible explosive landmines
                     for (let i = 0; i < 3; i++) {
                         const ang = this.angle + (i - 1) * 0.4;
                         const mine = new Bullet(this.x + Math.cos(ang) * 100, this.y + Math.sin(ang) * 100, ang, this, true);
@@ -1829,8 +1843,8 @@
                 this.lastCombatTime = Date.now();
 
                 playSound('hit');
-                createExplosion(this.x, this.y, '#ef4444', fpsBoosterActive ? 2 : 6);
-                if (this === player) triggerScreenShake(5);
+                createExplosion(this.x, this.y, '#ef4444', fpsBoosterActive ? 3 : 8);
+                if (this === player) triggerScreenShake(6);
 
                 if (Math.random() < 0.6) { 
                     createDamageText(this.x + (Math.random() - 0.5)*20, this.y - 25, "-" + Math.round(amount), '#fef08a');
@@ -1884,10 +1898,16 @@
                 if (this.isInvisible && this.isBot) return;
 
                 ctx.save();
-                ctx.translate(this.x, this.y);
+                // Harakat bobbing effekti (Vektorli silliq silkinish)
+                let bob = Math.sin(this.bobbing) * 1.5;
+                ctx.translate(this.x, this.y + bob);
                 ctx.globalAlpha = this.opacity;
 
-                // Circular base ring (Glowing vectors)
+                // Glowing base aura
+                ctx.shadowBlur = fpsBoosterActive ? 0 : 12;
+                ctx.shadowColor = this.color;
+
+                // 1. Shadow / Base circle ring
                 ctx.beginPath();
                 ctx.arc(0, 0, this.radius, 0, Math.PI * 2);
                 ctx.fillStyle = this.isBot ? 'rgba(239, 68, 68, 0.25)' : 'rgba(59, 130, 246, 0.25)';
@@ -1896,6 +1916,7 @@
                 ctx.lineWidth = 3;
                 ctx.stroke();
 
+                // Character core shape
                 ctx.beginPath();
                 ctx.arc(0, 0, 18, 0, Math.PI * 2);
                 ctx.fillStyle = this.color;
@@ -1939,12 +1960,12 @@
                     ctx.fillStyle = "#10b981";
                     ctx.fillRect(-12, -12, 24, 6);
                 } else if (this.brawlerKey === "bull") {
-                    ctx.fillStyle = "#94a3b8"; // Nose ring
+                    ctx.fillStyle = "#94a3b8"; 
                     ctx.beginPath();
                     ctx.arc(0, 6, 5, 0, Math.PI);
                     ctx.stroke();
                 } else if (this.brawlerKey === "spike") {
-                    ctx.fillStyle = "#dc2626"; // Red star flower
+                    ctx.fillStyle = "#dc2626"; 
                     ctx.beginPath();
                     ctx.moveTo(0, -14);
                     ctx.lineTo(4, -8);
@@ -1952,32 +1973,32 @@
                     ctx.closePath();
                     ctx.fill();
                 } else if (this.brawlerKey === "piper") {
-                    ctx.fillStyle = "#fde047"; // Blonde braid
+                    ctx.fillStyle = "#fde047"; 
                     ctx.fillRect(-5, 10, 10, 10);
                 } else if (this.brawlerKey === "barley") {
-                    ctx.fillStyle = "#ef4444"; // Metal optic eye
+                    ctx.fillStyle = "#ef4444"; 
                     ctx.beginPath();
                     ctx.arc(0, -4, 4, 0, Math.PI*2);
                     ctx.fill();
                 } else if (this.brawlerKey === "mortis") {
-                    ctx.fillStyle = "#374151"; // Top hat shape
+                    ctx.fillStyle = "#374151"; 
                     ctx.fillRect(-12, -15, 24, 6);
                     ctx.fillRect(-8, -25, 16, 12);
                 } else if (this.brawlerKey === "rico") {
-                    ctx.fillStyle = "#ef4444"; // Goggle eye
+                    ctx.fillStyle = "#ef4444"; 
                     ctx.beginPath();
                     ctx.arc(0, 0, 6, 0, Math.PI*2);
                     ctx.fill();
                 } else if (this.brawlerKey === "brock") {
-                    ctx.fillStyle = "#fbbf24"; // Visor
+                    ctx.fillStyle = "#fbbf24"; 
                     ctx.fillRect(-10, -5, 20, 4);
                 } else if (this.brawlerKey === "dynamike") {
-                    ctx.fillStyle = "#dc2626"; // Red miner helmet shape
+                    ctx.fillStyle = "#dc2626"; 
                     ctx.beginPath();
                     ctx.arc(0, -10, 10, Math.PI, 0);
                     ctx.fill();
                 } else if (this.brawlerKey === "bo") {
-                    ctx.fillStyle = "#ffffff"; // Eagle helmet visor
+                    ctx.fillStyle = "#ffffff"; 
                     ctx.beginPath();
                     ctx.moveTo(-10, -10);
                     ctx.lineTo(10, -10);
@@ -2003,8 +2024,23 @@
                 ctx.lineWidth = 3;
                 ctx.stroke();
 
+                // Draw muzzle flash animation if triggered
+                if (this.muzzleFlashTimer > 0) {
+                    ctx.save();
+                    ctx.rotate(this.muzzleFlashAngle);
+                    ctx.beginPath();
+                    ctx.moveTo(this.radius + 10, -6);
+                    ctx.lineTo(this.radius + 25, 0);
+                    ctx.lineTo(this.radius + 10, 6);
+                    ctx.closePath();
+                    ctx.fillStyle = "#f59e0b";
+                    ctx.fill();
+                    ctx.restore();
+                }
+
                 ctx.restore();
 
+                // HUD Labels
                 ctx.save();
                 ctx.font = 'bold 11px Arial';
                 ctx.fillStyle = '#ffffff';
@@ -2103,35 +2139,15 @@
                 this.active = true;
                 
                 this.trailTimer = 0;
-                
-                // Specific projectile tags for 15 Brawlers
                 this.isPoisonDagger = false;
-                this.isCactusSpike = false;
-                this.isPiperSniper = false;
-                this.isAcidBottle = false;
-                this.isMortisBat = false;
-                this.isBouncy = false;
-                this.isBrockRocket = false;
-                this.isDynamite = false;
-                this.isBoArrow = false;
-                
-                // Super variants
-                this.isSpikePool = false;
-                this.isPiperBomb = false;
-                this.isPiperBombTimer = 90; // explodes on timeout
-                this.isDynamikeBarrel = false;
-                this.isBoMine = false;
-                this.bounces = 0;
             }
 
             update(dt) {
-                // Piper sniper bullet grows damage based on distance traveled
                 if (this.isPiperSniper) {
                     const traveledDist = Math.hypot(this.x - this.startX, this.y - this.startY);
                     this.damage = this.owner.damage * (1 + (traveledDist / this.range) * 0.8) * (1 + this.owner.powerCubes * 0.12);
                 }
 
-                // If Piper Bomb or Mines, they don't move
                 if (this.isPiperBomb) {
                     this.isPiperBombTimer -= dt;
                     if (this.isPiperBombTimer <= 0) {
@@ -2142,7 +2158,6 @@
                 }
 
                 if (this.isBoMine) {
-                    // Trigger when enemy enters radius
                     brawlers.forEach(other => {
                         if (other === this.owner || other.hp <= 0) return;
                         if (Math.hypot(this.x - other.x, this.y - other.y) < 60) {
@@ -2157,17 +2172,17 @@
                 this.y += Math.sin(this.angle) * this.speed * dt;
 
                 this.trailTimer++;
-                const trailMod = fpsBoosterActive ? 6 : 2; 
+                const trailMod = fpsBoosterActive ? 5 : 1; 
                 if (this.trailTimer % trailMod === 0 && isVisibleInViewport(this.x, this.y)) {
                     particles.push({
                         x: this.x,
                         y: this.y,
                         vx: (Math.random() - 0.5) * 1.5,
                         vy: (Math.random() - 0.5) * 1.5,
-                        radius: this.isSuper ? Math.random() * 4 + 2 : Math.random() * 2 + 1,
+                        radius: this.isSuper ? Math.random() * 4 + 2.5 : Math.random() * 2.5 + 1.2,
                         color: this.owner.bConfig.bulletColor,
-                        alpha: 0.6,
-                        decay: 0.07
+                        alpha: 0.8,
+                        decay: 0.05
                     });
                 }
 
@@ -2185,7 +2200,7 @@
                         
                         if (this.isBouncy && this.bounces < 3) {
                             this.bounces++;
-                            this.angle = this.angle + Math.PI; // bounce back
+                            this.angle = this.angle + Math.PI; 
                             this.startX = this.x;
                             this.startY = this.y;
                             playSound('hit');
@@ -2194,11 +2209,11 @@
 
                         if (this.isSuper && wall.destructible) {
                             playSound('wall_break');
-                            createExplosion(wall.x + wall.w/2, wall.y + wall.h/2, '#78350f', fpsBoosterActive ? 6 : 16);
-                            if (this.owner === player) triggerScreenShake(6);
+                            createExplosion(wall.x + wall.w/2, wall.y + wall.h/2, '#78350f', fpsBoosterActive ? 6 : 20);
+                            if (this.owner === player) triggerScreenShake(8);
                             walls.splice(i, 1);
                         } else {
-                            createExplosion(this.x, this.y, '#94a3b8', 2);
+                            createExplosion(this.x, this.y, '#94a3b8', 4);
                         }
 
                         this.die();
@@ -2213,12 +2228,12 @@
                     if (d < this.radius + box.size / 2) {
                         box.hp -= this.damage;
                         this.die();
-                        createExplosion(this.x, this.y, '#eab308', 3);
+                        createExplosion(this.x, this.y, '#eab308', 5);
                         
                         if (box.hp <= 0) {
                             playSound('cube');
                             powerCubes.push({ x: box.x, y: box.y });
-                            createExplosion(box.x, box.y, '#eab308', fpsBoosterActive ? 6 : 14);
+                            createExplosion(box.x, box.y, '#eab308', fpsBoosterActive ? 8 : 18);
                         }
                         return;
                     }
@@ -2261,7 +2276,7 @@
 
             triggerExplosionDamage(radius, baseDmg) {
                 playSound('wall_break');
-                createExplosion(this.x, this.y, this.owner.color, 15);
+                createExplosion(this.x, this.y, this.owner.color, 25);
                 brawlers.forEach(other => {
                     if (other === this.owner || other.hp <= 0) return;
                     if (Math.hypot(this.x - other.x, this.y - other.y) < radius) {
@@ -2279,27 +2294,22 @@
             die() {
                 this.active = false;
                 
-                // Explode Brock rocket on death
                 if (this.isBrockRocket) {
                     this.triggerExplosionDamage(80, 500);
                 }
 
-                // Explode Dynamike dynamite
                 if (this.isDynamite) {
                     this.triggerExplosionDamage(70, 430);
                 }
 
-                // Explode Bo Arrow
                 if (this.isBoArrow) {
                     this.triggerExplosionDamage(60, 380);
                 }
 
-                // Explode Dynamike Super Barrel
                 if (this.isDynamikeBarrel) {
                     this.triggerExplosionDamage(140, 1100);
                 }
 
-                // Cactus splitting on maximum range
                 if (this.isCactusSpike) {
                     const needles = 6;
                     for (let i = 0; i < needles; i++) {
@@ -2311,14 +2321,11 @@
                     }
                 }
 
-                // Splash pools on Barley Acid Bottle
                 if (this.isAcidBottle) {
-                    // Spawns a lingering puddle
                     const puddle = new LingeringArea(this.x, this.y, 60, 150, this.owner, '#fbbf24');
                     lingeringAreas.push(puddle);
                 }
 
-                // Spike Super Needle Pool
                 if (this.isSpikePool) {
                     const pool = new LingeringArea(this.x, this.y, 100, 150, this.owner, '#4ade80', true);
                     lingeringAreas.push(pool);
@@ -2345,7 +2352,7 @@
                     ctx.strokeStyle = '#fca5a5';
                     ctx.stroke();
                 } else if (this.isBoMine) {
-                    ctx.fillStyle = 'rgba(224, 242, 254, 0.2)'; // semi invisible
+                    ctx.fillStyle = 'rgba(224, 242, 254, 0.2)'; 
                     ctx.fill();
                 } else {
                     ctx.fillStyle = this.owner.bConfig.bulletColor;
@@ -2358,7 +2365,7 @@
             }
         }
 
-        // --- LINGERING DAMAGING AREAS (Barley/Spike pools) ---
+        // --- LINGERING DAMAGING AREAS ---
         class LingeringArea {
             constructor(x, y, radius, duration, owner, color, isSpike = false) {
                 this.x = x;
@@ -2368,18 +2375,20 @@
                 this.owner = owner;
                 this.color = color;
                 this.isSpike = isSpike;
+                
+                // Animatsiya kadri
+                this.animFrame = 0;
             }
 
             update(dt) {
                 this.timer -= dt;
+                this.animFrame += 0.1 * dt;
                 
-                // Damage over time to Brawlers standing in area
                 brawlers.forEach(b => {
                     if (b === this.owner || b.hp <= 0) return;
                     if (Math.hypot(b.x - this.x, b.y - this.y) < this.radius) {
                         b.takeDamage(100 * dt, this.owner);
                         if (this.isSpike) {
-                            // Spike slows down standing brawlers
                             b.speed = b.bConfig.speed * 0.5;
                         }
                     }
@@ -2389,9 +2398,12 @@
             draw() {
                 if (!isVisibleInViewport(this.x, this.y, this.radius)) return;
                 ctx.save();
+                
+                // Pulsiruyushiy yorug'lik effekti
+                let pulse = 1 + Math.sin(this.animFrame) * 0.08;
                 ctx.globalAlpha = 0.35;
                 ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.arc(this.x, this.y, this.radius * pulse, 0, Math.PI * 2);
                 ctx.fillStyle = this.color;
                 ctx.fill();
                 ctx.strokeStyle = '#ffffff';
@@ -2408,18 +2420,18 @@
 
             const finalCount = fpsBoosterActive ? Math.ceil(count * 0.4) : count; 
 
-            if (particles.length > 120) return;
+            if (particles.length > 200) return; // Zarrachalar ko'paydi
 
             for (let i = 0; i < finalCount; i++) {
                 particles.push({
                     x: x,
                     y: y,
-                    vx: (Math.random() - 0.5) * 8,
-                    vy: (Math.random() - 0.5) * 8,
-                    radius: Math.random() * 4 + 1.5,
+                    vx: (Math.random() - 0.5) * 10, // Tezroq portlash parchalari
+                    vy: (Math.random() - 0.5) * 10,
+                    radius: Math.random() * 5 + 1.8,
                     color: color,
                     alpha: 1,
-                    decay: Math.random() * 0.05 + 0.02
+                    decay: Math.random() * 0.04 + 0.015
                 });
             }
         }
@@ -3010,6 +3022,40 @@
                 });
             }
         }
+
+        // --- EXPOSE NECESSARY FUNCTIONS TO WINDOW SCOPE ---
+        window.selectBrawler = function(key) {
+            selectedBrawlerKey = key;
+            currentPlayer.currentBrawler = key;
+            saveProfile();
+            renderShop();
+            updateBrawlerInfo();
+        };
+
+        window.buyBrawler = function(key) {
+            const b = BRAWLERS[key];
+            if (currentPlayer.xp >= b.cost) {
+                currentPlayer.xp -= b.cost;
+                currentPlayer.unlockedBrawlers.push(key);
+                currentPlayer.currentBrawler = key;
+                selectedBrawlerKey = key;
+                saveProfile();
+                
+                document.getElementById('player-profile-xp').textContent = currentPlayer.xp + " XP";
+                renderShop();
+                updateBrawlerInfo();
+                alert(`Tabriklaymiz! Yangi brawler ${b.name} ochildi! 🎉`);
+            } else {
+                alert(`Kechirasiz, XP yetarli emas! ${b.cost} XP talab qilinadi.`);
+            }
+        };
+
+        window.toggleFpsBooster = toggleFpsBooster;
+        window.toggleControlMode = toggleControlMode;
+        window.startGame = startGame;
+        window.loginUser = loginUser;
+        window.resetToMenu = resetToMenu;
+        window.exportSaveFile = exportSaveFile;
 
         window.onload = function() {
             detectDevice();
